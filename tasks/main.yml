@@ -6,6 +6,7 @@
       - docker_network_name is defined
       - firefly_3_access_token is defined
       - firefly_3_url is defined
+      - import_files_dir is defined
 
 - name: Create the importer directory
   file:
@@ -20,3 +21,10 @@
     owner: root
     group: root
     mode: "0755"
+
+- name: Run every 5 minutes
+  cron:
+    name: "Check for pending imports every 5 minutes"
+    minute: "*/5"
+    job: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/import"
+    user: root
