@@ -10,7 +10,7 @@ docker run --rm --network="{{ docker_network_name }}" -v "$IMPORT_FILES_DIR:/imp
 
 CSV_COUNT=$(ls -1 $IMPORT_FILES_DIR/*.csv 2>/dev/null | wc -l)
 
-curl -X POST -d '{"body":" $CSV_COUNT files imported"}' -H "Content-Type: application/json" {{ notifications_endpoint }}
+curl -X POST -d "{\"body\":\"$CSV_COUNT files imported\"}" -H "Content-Type: application/json" {{ notifications_endpoint }}
 
 # Cleanup after import
 rm $IMPORT_FILES_DIR/*.csv $IMPORT_FILES_DIR/*.json
