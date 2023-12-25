@@ -1,5 +1,6 @@
 #!/bin/bash
 IMPORT_FILES_DIR="{{ import_files_dir }}"
+ERRORED_FILES_DIR="{{ errored_files_dir }}"
 
 # If the dir is empty, exit
 if [ -z "$(ls -A $IMPORT_FILES_DIR)" ]; then
@@ -11,9 +12,8 @@ docker run --rm --network="{{ docker_network_name }}" --name="firefly-importer" 
 RESULT=$?
 
 if [ $RESULT -ne 0 ]; then
-    mkdir -p $PWD/error
-    mv $IMPORT_FILES_DIR/*.csv $PWD/error
-    mv $IMPORT_FILES_DIR/*.json $PWD/error
+    mv $IMPORT_FILES_DIR/*.csv $ERRORED_FILES_DIR
+    mv $IMPORT_FILES_DIR/*.json $ERRORED_FILES_DIR
     curl -X POST -d "{\"body\":\"Firefly import failed\"}" -H "Content-Type: application/json" {{ notifications_endpoint }}
     exit 1
 fi

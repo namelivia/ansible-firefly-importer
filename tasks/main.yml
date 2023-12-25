@@ -15,6 +15,12 @@
     state: directory
     mode: "0755"
 
+- name: Create the errored files dir
+  file:
+    path: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/error"
+    state: directory
+    mode: "0755"
+
 - name: Create the import script
   template:
     src: import.j2
@@ -22,6 +28,9 @@
     owner: root
     group: root
     mode: "0755"
+    vars:
+      - errored_files_dir: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/error"
+
 
 - name: Run every 5 minutes
   cron:
