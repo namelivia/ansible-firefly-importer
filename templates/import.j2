@@ -11,6 +11,9 @@ docker run --rm --network="{{ docker_network_name }}" --name="firefly-importer" 
 RESULT=$?
 
 if [ $RESULT -ne 0 ]; then
+    mkdir -p $PWD/error
+    mv $IMPORT_FILES_DIR/*.csv $PWD/error
+    mv $IMPORT_FILES_DIR/*.json $PWD/error
     curl -X POST -d "{\"body\":\"Firefly import failed\"}" -H "Content-Type: application/json" {{ notifications_endpoint }}
     exit 1
 fi
