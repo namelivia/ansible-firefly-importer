@@ -1,6 +1,6 @@
 #!/bin/bash
 IMPORT_FILES_DIR="{{ import_files_dir }}"
-ERRORED_FILES_DIR="{{ errored_files_dir }}"
+ERRORED_FILES_DIR="{{ hostvars[inventory_hostname]['working_directory'] }}{{ application_name }}/error"
 
 # If the dir is empty, exit
 if [ -z "$(ls -A $IMPORT_FILES_DIR)" ]; then

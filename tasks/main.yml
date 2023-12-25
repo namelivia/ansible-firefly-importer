@@ -28,9 +28,6 @@
     owner: root
     group: root
     mode: "0755"
-    vars:
-      - errored_files_dir: "{{ hostvars[inventory_hostname].working_directory }}{{ application_name }}/error"
-
 
 - name: Run every 5 minutes
   cron:
